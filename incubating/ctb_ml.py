@@ -10,7 +10,11 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
+from sklearn.linear_model import LinearRegression
+
 import pandas as pd
+
+import numpy as np
 
 def getBestClassificationModel(inputX, inputY):
     trainX, validationX, trainY, validationY = train_test_split(inputX, inputY, random_state=1)
@@ -85,6 +89,29 @@ def getBestClassificationModel(inputX, inputY):
         ]
     })
     models.sort_values(by='Accuracy', ascending=False, inplace=True)
+    print(models)
+
+    return models['Model'].iloc[0]
+
+def getBestRegressionModel(inputX, inputY):
+    trainX, validationX, trainY, validationY = train_test_split(inputX, inputY, random_state=1)
+
+    linearRegression = LinearRegression()
+    linearRegression.fit(trainX, trainY)
+    linearRegressionMse = np.mean((linearRegression.predict(validationX) - validationY) ** 2)
+    print(linearRegressionMse)
+    linearRegressionScore = linearRegression.score(validationX, validationY)
+    print(linearRegressionScore)
+
+    models = pd.DataFrame({
+        'Model': [
+            linearRegression
+        ],
+        'Score': [
+            linearRegressionScore
+        ]
+    })
+    models.sort_values(by='Score', ascending=False, inplace=True)
     print(models)
 
     return models['Model'].iloc[0]
