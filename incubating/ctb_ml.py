@@ -1,3 +1,5 @@
+from sklearn.model_selection import train_test_split
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
@@ -10,50 +12,52 @@ from sklearn.ensemble import RandomForestClassifier
 
 import pandas as pd
 
-def getBestModel(trainX, trainY):
+def getBestModel(inputX, inputY):
+    trainX, validationX, trainY, validationY = train_test_split(inputX, inputY, random_state=1)
+
     logisticRegression = LogisticRegression()
     logisticRegression.fit(trainX, trainY)
-    logisticRegressionAccuracy = round(logisticRegression.score(trainX, trainY) * 100, 2)
+    logisticRegressionAccuracy = round(logisticRegression.score(validationX, validationY) * 100, 2)
     # print(logisticRegressionAccuracy)
 
     svc = SVC()
     svc.fit(trainX, trainY)
-    svcAccuracy = round(svc.score(trainX, trainY) * 100, 2)
+    svcAccuracy = round(svc.score(validationX, validationY) * 100, 2)
     # print(svcAccuracy)
 
     knn = KNeighborsClassifier(n_neighbors = 3)
     knn.fit(trainX, trainY)
-    knnAccuracy = round(knn.score(trainX, trainY) * 100, 2)
+    knnAccuracy = round(knn.score(validationX, validationY) * 100, 2)
     # print(knnAccuracy)
 
     gaussianNaiveBayes = GaussianNB()
     gaussianNaiveBayes.fit(trainX, trainY)
-    gaussianNaiveBayesAccuracy = round(gaussianNaiveBayes.score(trainX, trainY) * 100, 2)
+    gaussianNaiveBayesAccuracy = round(gaussianNaiveBayes.score(validationX, validationY) * 100, 2)
     # print(gaussianNaiveBayesAccuracy)
 
     perceptron = Perceptron()
     perceptron.fit(trainX, trainY)
-    perceptronAccuracy = round(perceptron.score(trainX, trainY) * 100, 2)
+    perceptronAccuracy = round(perceptron.score(validationX, validationY) * 100, 2)
     # print(perceptronAccuracy)
 
     linearSvc = LinearSVC()
     linearSvc.fit(trainX, trainY)
-    linearSvcAccuracy = round(linearSvc.score(trainX, trainY) * 100, 2)
+    linearSvcAccuracy = round(linearSvc.score(validationX, validationY) * 100, 2)
     # print(linearSvcAccuracy)
 
     sgd = SGDClassifier()
     sgd.fit(trainX, trainY)
-    sgdAccuracy = round(sgd.score(trainX, trainY) * 100, 2)
+    sgdAccuracy = round(sgd.score(validationX, validationY) * 100, 2)
     # print(sgdAccuracy)
 
     decisionTree = DecisionTreeClassifier()
     decisionTree.fit(trainX, trainY)
-    decisionTreeAccuracy = round(decisionTree.score(trainX, trainY) * 100, 2)
+    decisionTreeAccuracy = round(decisionTree.score(validationX, validationY) * 100, 2)
     # print(decisionTreeAccuracy)
 
     randomForest = RandomForestClassifier()
     randomForest.fit(trainX, trainY)
-    randomForestAccuracy = round(randomForest.score(trainX, trainY) * 100, 2)
+    randomForestAccuracy = round(randomForest.score(validationX, validationY) * 100, 2)
     # print(randomForestAccuracy)
 
     models = pd.DataFrame({
