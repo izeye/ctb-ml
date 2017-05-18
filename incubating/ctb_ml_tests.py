@@ -1,6 +1,6 @@
 import pandas as pd
 
-train = pd.read_csv('train.csv')
+train = pd.read_csv('test/kaggle/titanic/train.csv')
 # print(train)
 
 median_age = train.Age.dropna().median()
@@ -43,10 +43,10 @@ trainY = train["Survived"]
 
 import ctb_ml
 
-selectedModel = ctb_ml.getBestModel(trainX, trainY)
+selectedModel = ctb_ml.getBestClassificationModel(trainX, trainY)
 print(selectedModel)
 
-test = pd.read_csv('test.csv')
+test = pd.read_csv('test/kaggle/titanic/test.csv')
 # print(test)
 
 quantify(test)
@@ -63,4 +63,4 @@ submission = pd.DataFrame({
     "PassengerId": test["PassengerId"],
     "Survived": testY
 })
-submission.to_csv("submission.csv", index=False)
+submission.to_csv("test/kaggle/titanic/submission.csv", index=False)

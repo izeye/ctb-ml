@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 import pandas as pd
 
-def getBestModel(inputX, inputY):
+def getBestClassificationModel(inputX, inputY):
     trainX, validationX, trainY, validationY = train_test_split(inputX, inputY, random_state=1)
 
     logisticRegression = LogisticRegression()
